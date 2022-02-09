@@ -4,10 +4,8 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-17-updated';
 import { shallow } from 'enzyme';
 import TodoList from './TodoList';
-import { render , screen, fireEvent, getByTestId, within} from '@testing-library/react';
+import { render , screen } from '@testing-library/react';
 import mockData from '../../mockData';
-
-const deleteTask = jest.fn().mockImplementation((id) => {})
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -24,25 +22,6 @@ describe("Testing functionality of TodoList", () => {
         mockData.forEach((todo) => {
             expect(screen.getByText(todo.title)).toBeInTheDocument()
         });
-    });
-    
-    
-    it("Should call deleteTask function on clicking delete button", () => {
-        
-        const {getByTestId} = render(<TodoList todos = {[mockData[0]]} deleteTask = {deleteTask}/>)
-        fireEvent.click(getByTestId("delete-todo"))
-        expect(deleteTask).toHaveBeenCalledWith("todo-1");
-
-    })
-
-    it("Should be able to toggle task completion of a Todo", () => {
-
-        const {getByTestId} = render(<TodoList todos = {[{id : "todo-6", title: "Code", completed: false}]}/>)
-        fireEvent.click(getByTestId("checkbox"))
-        expect(getByTestId("checkbox")).toBeChecked();
-
-    })
-    
-    
+    });   
     
 });
